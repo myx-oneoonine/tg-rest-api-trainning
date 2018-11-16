@@ -1,4 +1,4 @@
-package com.example;
+package com.example.callSoapService;
 
 public class TempconvertRequest {
 

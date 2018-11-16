@@ -1,10 +1,8 @@
-package com.example;
+package com.example.callSoapService;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -42,7 +40,7 @@ public class RestFulController2 {
             String mesg = "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">"
                     + "<soap:Body>"
                     + "<CelsiusToFahrenheit xmlns=\"https://www.w3schools.com/xml/\">"
-                    + "<Celsius>50</Celsius>"
+                    + "<Celsius>" + req.getCelsius() + "</Celsius>"
                     + "</CelsiusToFahrenheit>"
                     + "</soap:Body>"
                     + "</soap:Envelope>";
@@ -51,18 +49,10 @@ public class RestFulController2 {
 
             SOAPMessage request = MessageFactory.newInstance().createMessage(null, is);
             SOAPMessage soapResponse = soapConnection.call(request, url);
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-            soapResponse.writeTo(baos);
-
-            String resp = baos.toString();
-            System.out.println(resp);
-            StringReader reader = new StringReader(resp);
             JAXBContext jaxbContext = JAXBContext.newInstance(TempconvertResponse.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            response = (TempconvertResponse) unmarshaller.unmarshal(reader);
-            return response;
+            
+            response = (TempconvertResponse) unmarshaller.unmarshal(soapResponse.getSOAPBody().extractContentAsDocument());
         } catch (IOException | UnsupportedOperationException | SOAPException e) {
             System.out.println(e.getMessage());
         } catch (JAXBException ex) {

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.example;
+package com.example.callSoapService;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Yosaporn_pokky
  */
-@XmlRootElement(name = "CelsiusToFahrenheitResponse")
+@XmlRootElement(name = "CelsiusToFahrenheitResponse", namespace = "https://www.w3schools.com/xml/")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class TempconvertResponse {
 
