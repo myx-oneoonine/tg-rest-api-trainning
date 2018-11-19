@@ -1,7 +1,10 @@
 package com.example.callSoapService;
 
+import javax.validation.constraints.NotNull;
+
 public class TempconvertRequest {
 
+    @NotNull
     private String celsius;
 
     public String getCelsius() {

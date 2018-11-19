@@ -18,8 +18,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class TempconvertResponse {
 
+    private String errorMsg;
+    
     @XmlElement(name = "CelsiusToFahrenheitResult")
     private String fahrenheit;
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
 
     public String getFahrenheit() {
         return fahrenheit;
