@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 @Entity
 public class Customer {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -33,4 +33,5 @@ public class Customer {
 
 	@Email(message = "Please provide valid email address")
 	private String email;
+
 }

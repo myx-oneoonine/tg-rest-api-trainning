@@ -9,9 +9,9 @@ spring:
       ddl-auto: create
 
   datasource:
-    url: jdbc:mysql://localhost:3306/db_userservice
-    username: webservice
-    password: welcome1
+	  url: jdbc:mysql://localhost:3306/db_webservice
+	  username: webservice
+	  password: welcome1
 
   security:
     user:
