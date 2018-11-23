@@ -1,7 +1,7 @@
 server:
   port: 8080
-  servlet:
-    contextPath: /api
+#  servlet:
+#    contextPath: /api
 
 spring:
   security:
@@ -11,9 +11,6 @@ spring:
       
 security:
   oauth2:
-    client:
-      client-id: clientId
-      client-secret: clientSecret
-      authorized-grant-types: authorization_code, refresh_token, password
-      scope: openid
+    resource:
+      token-info-uri: http://localhost:8080/authen/oauth/check_token/
       
