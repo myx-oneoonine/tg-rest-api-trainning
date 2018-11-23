@@ -1,6 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.ObjectRequest;
+import com.example.demo.repo.Customer;
+import com.example.demo.repo.CustomerService;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,9 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/api/helloWorld")
 public class HelloworldController {
 
-    @GetMapping(value = "get")
-    public String getHelloWorld() {
-        return "Hello world!";
+    @Autowired
+    CustomerService customerService;
+
+    @GetMapping(value = "customer")
+    public List<Customer> getCustomers() {
+        return customerService.retrieveCustomer();
     }
 
     @PostMapping(value = "post")

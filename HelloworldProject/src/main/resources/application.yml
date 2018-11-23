@@ -2,13 +2,17 @@ server:
   port: 8080
 #  servlet:
 #    contextPath: /api
-
+ 
 spring:
-  security:
-    user:
-      name: pokky
-      password: password
+  jpa:
+    hibernate:
+      ddl-auto: create
       
+  datasource:
+    url: jdbc:mysql://localhost:3306/demo
+    username: root
+    password: root    
+
 security:
   oauth2:
     resource:
