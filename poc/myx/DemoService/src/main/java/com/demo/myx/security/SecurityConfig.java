@@ -30,18 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		auth.inMemoryAuthentication()
 
-				.withUser("crmadmin").password("{noop}crmpass").roles("ADMIN", "USER")
-				.and().withUser("crmuser")
+				.withUser("crmadmin").password("{noop}crmpass").roles("ADMIN", "USER").and().withUser("crmuser")
 				.password("{noop}pass123").roles("USER");
-		
-//		auth.inMemoryAuthentication()  
-//        .withUser("user")
-//         .password("password")
-//         .roles("USER")
-//         .and()
-//         .withUser("sysuser")
-//         .password("password")
-//         .roles("SYSTEM");
 	}
 
 	@Override
@@ -50,7 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().csrf().disable()
 				.authorizeRequests()
 //					.antMatchers("/customers").permitAll()
-				.antMatchers("/signup").permitAll().antMatchers("/oauth/token").permitAll()
+				.antMatchers("/signup").permitAll()
+				.antMatchers("/oauth/token").permitAll()
 				// .antMatchers("/api/**").authenticated()
 				// .antMatchers("/api/**").hasRole("USER")
 				.anyRequest().authenticated().and().httpBasic().realmName("CRM_REALM");
