@@ -23,4 +23,8 @@ public class UserRole {
 	public UserRole(String name) {
 		this.name = name;
 	}
+
+	public UserRole() {
+
+	}
 }

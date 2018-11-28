@@ -16,14 +16,23 @@ public class DemoUserDetails implements UserDetails {
 	private Collection<? extends GrantedAuthority> authorities;
 
 	public DemoUserDetails(User user) {
-		setAuthorities();
+		this.username = user.getUsername();
+		this.password = user.getPassword();
+		setAuthorities(user.getRoles());
 	}
 
-	private void setAuthorities() {
+	private void setAuthorities(List<UserRole> userRoles) {
 		List<GrantedAuthority> authorityList = new ArrayList<>();
 
-		GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("");
-		authorityList.add(grantedAuthority);
+		for (UserRole userRole : userRoles) {
+			String roleName = userRole.getName().toUpperCase();
+
+			if (!roleName.startsWith("ROLE_")) {
+				roleName = "ROLE_" + roleName;
+			}
+
+			authorityList.add(new SimpleGrantedAuthority(roleName));
+		}
 
 		this.authorities = authorityList;
 	}
@@ -55,7 +64,7 @@ public class DemoUserDetails implements UserDetails {
 	@Override
 	public boolean isAccountNonLocked() {
 
-		return false;
+		return true;
 	}
 
 	@Override
