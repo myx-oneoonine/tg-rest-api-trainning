@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
@@ -26,12 +27,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private ClientDetailsService clientDetailsService;
 
 	@Autowired
-	public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
+	DemoUserDetailsService demoUserDetailsService;
+	
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-		auth.inMemoryAuthentication()
+	
 
-				.withUser("crmadmin").password("{noop}crmpass").roles("ADMIN", "USER").and().withUser("crmuser")
-				.password("{noop}pass123").roles("USER");
+		auth.userDetailsService(demoUserDetailsService);
 	}
 
 	@Override
@@ -40,8 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().csrf().disable()
 				.authorizeRequests()
 //					.antMatchers("/customers").permitAll()
-				.antMatchers("/signup").permitAll()
-				.antMatchers("/oauth/token").permitAll()
+				.antMatchers("/signup").permitAll().antMatchers("/oauth/token").permitAll()
 				// .antMatchers("/api/**").authenticated()
 				// .antMatchers("/api/**").hasRole("USER")
 				.anyRequest().authenticated().and().httpBasic().realmName("CRM_REALM");
