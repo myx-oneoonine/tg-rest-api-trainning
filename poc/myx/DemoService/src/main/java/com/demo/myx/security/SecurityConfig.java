@@ -1,5 +1,7 @@
 package com.demo.myx.security;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +19,7 @@ import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenStoreUserApprovalHandler;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 @Configuration
 @EnableWebSecurity
@@ -28,6 +30,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private DemoUserDetailsService demoUserDetailsService;
+
+	@Autowired
+	private DataSource dataSource;
 
 //	@Override
 //	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -58,9 +63,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
 
+//	@Bean
+//	public TokenStore tokenStore() {
+//		return new InMemoryTokenStore();
+//	}
+
 	@Bean
-	public TokenStore tokenStore() {
-		return new InMemoryTokenStore();
+	public JdbcTokenStore tokenStore() {
+		return new JdbcTokenStore(dataSource);
 	}
 
 	@Bean

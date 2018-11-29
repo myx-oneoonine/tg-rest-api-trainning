@@ -1,5 +1,7 @@
 package com.demo.myx.security;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +25,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	private TokenStore tokenStore;
 
 	@Autowired
+	private DataSource dataSource;
+
+	@Autowired
 	private UserApprovalHandler userApprovalHandler;
 
 	@Autowired
@@ -31,11 +36,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.inMemory().withClient("crmClient1").secret("{noop}crmSuperSecret")
-				.authorizedGrantTypes("password", "refresh_token").authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
-				.scopes("read", "write", "trust")
-				// .accessTokenValiditySeconds(ONE_DAY)
-				.accessTokenValiditySeconds(300).refreshTokenValiditySeconds(THIRTY_DAYS);
+//		clients.inMemory().withClient("crmClient1").secret("{noop}crmSuperSecret")
+//				.authorizedGrantTypes("password", "refresh_token").authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
+//				.scopes("read", "write", "trust")
+//				// .accessTokenValiditySeconds(ONE_DAY)
+//				.accessTokenValiditySeconds(300).refreshTokenValiditySeconds(THIRTY_DAYS);
+
+		clients.jdbc(dataSource);
 
 	}
 
