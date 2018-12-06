@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -65,4 +66,16 @@ public class CustomerController {
 			return ResponseEntity.noContent().build();
 		}
 	}
+	
+	@GetMapping(params = "name")
+	public ResponseEntity<?> getCustomer(@RequestParam(value = "name") String name) {
+		List<Customer> customerList = customerService.retrieveCustomer(name);
+
+		if (customerList.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.ok(customerList);
+		}
+	}
+
 }
