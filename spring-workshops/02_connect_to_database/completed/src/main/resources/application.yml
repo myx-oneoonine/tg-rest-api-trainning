@@ -1,0 +1,15 @@
+server:
+  port: 8080
+  servlet:
+    contextPath: /demo
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+      
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_demo
+    username: demo
+    password: welcome1
+       
