@@ -49,10 +49,10 @@ public class RestFulController2 {
 			
 			soapMessage = soapConnection.call(soapMessage, urlWsdl);
 
-			Class<?> tempconvertResponse = convertXMLToObject(TempconvertResponse.class, soapMessage);
-			System.out.println(convertObjectToXML(TempconvertResponse.class, tempconvertResponse));
+			Class<?> response = convertXMLToObject(TempconvertResponse.class, soapMessage);
+			System.out.println(convertObjectToXML(TempconvertResponse.class, response));
 
-			return tempconvertResponse;
+			return response;
 		} catch (IOException | UnsupportedOperationException | SOAPException exception) {
 			System.out.println(exception.getMessage());
 			return null;
@@ -76,8 +76,8 @@ public class RestFulController2 {
 		JAXBContext jaxbContext = JAXBContext.newInstance(class1);
 		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
-		Class<?> tempconvertResponse = (Class<?>) unmarshaller.unmarshal(soapMessage.getSOAPBody().extractContentAsDocument());
+		Class<?> result = (Class<?>) unmarshaller.unmarshal(soapMessage.getSOAPBody().extractContentAsDocument());
 		
-		return tempconvertResponse;
+		return result;
 	}
 }
