@@ -29,12 +29,11 @@ public class RestFulController2 {
 
 	// POST method
 	@PostMapping(value = "/temp")
-	public Class<?> processRequest(@Valid @RequestBody TempconvertRequest req)
-			throws MalformedURLException, IOException {
-
+	public TempconvertResponse processRequest(@Valid @RequestBody TempconvertRequest req) throws IOException, JAXBException, SOAPException {
+		SOAPConnectionFactory connectionFactory = SOAPConnectionFactory.newInstance();
+		SOAPConnection soapConnection = connectionFactory.createConnection();
+		
 		try {
-			SOAPConnectionFactory connectionFactory = SOAPConnectionFactory.newInstance();
-			SOAPConnection soapConnection = connectionFactory.createConnection();
 			URL urlWsdl = new URL("https://www.w3schools.com/xml/tempconvert.asmx?wsdl");
 			String mesg = "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">"
 					+ "<soap:Body>" 
@@ -49,16 +48,15 @@ public class RestFulController2 {
 			
 			soapMessage = soapConnection.call(soapMessage, urlWsdl);
 
-			Class<?> response = convertXMLToObject(TempconvertResponse.class, soapMessage);
+			TempconvertResponse response = (TempconvertResponse) convertXMLToObject(TempconvertResponse.class, soapMessage);
 			System.out.println(convertObjectToXML(TempconvertResponse.class, response));
-
+			
 			return response;
 		} catch (IOException | UnsupportedOperationException | SOAPException exception) {
-			System.out.println(exception.getMessage());
-			return null;
-		} catch (JAXBException exception) {
 			Logger.getLogger(RestFulController2.class.getName()).log(Level.SEVERE, null, exception);
 			return null;
+		} finally {
+			soapConnection.close();
 		}
 	}
 
@@ -72,11 +70,11 @@ public class RestFulController2 {
 		return xmlString;
 	}
 	
-	private Class<?> convertXMLToObject(Class<?> class1, SOAPMessage soapMessage) throws JAXBException, SOAPException {
+	private Object convertXMLToObject(Class<?> class1, SOAPMessage soapMessage) throws JAXBException, SOAPException {
 		JAXBContext jaxbContext = JAXBContext.newInstance(class1);
 		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
-		Class<?> result = (Class<?>) unmarshaller.unmarshal(soapMessage.getSOAPBody().extractContentAsDocument());
+		Object result = unmarshaller.unmarshal(soapMessage.getSOAPBody().extractContentAsDocument());
 		
 		return result;
 	}
