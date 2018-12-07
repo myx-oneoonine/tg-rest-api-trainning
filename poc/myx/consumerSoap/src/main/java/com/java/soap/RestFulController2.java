@@ -37,8 +37,12 @@ public class RestFulController2 {
 			SOAPConnection soapConnection = connectionFactory.createConnection();
 			URL urlWsdl = new URL("https://www.w3schools.com/xml/tempconvert.asmx?wsdl");
 			String mesg = "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">"
-					+ "<soap:Body>" + "<CelsiusToFahrenheit xmlns=\"https://www.w3schools.com/xml/\">" + "<Celsius>"
-					+ req.getCelsius() + "</Celsius>" + "</CelsiusToFahrenheit>" + "</soap:Body>" + "</soap:Envelope>";
+					+ "<soap:Body>" 
+					+ "<CelsiusToFahrenheit xmlns=\"https://www.w3schools.com/xml/\">" 
+					+ "<Celsius>" + req.getCelsius() + "</Celsius>" 
+					+ "</CelsiusToFahrenheit>" 
+					+ "</soap:Body>" 
+					+ "</soap:Envelope>";
 
 			InputStream inputStream = new ByteArrayInputStream(mesg.getBytes());
 			SOAPMessage soapMessage = MessageFactory.newInstance().createMessage(null, inputStream);
