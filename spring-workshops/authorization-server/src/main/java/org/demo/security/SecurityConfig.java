@@ -42,7 +42,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/about").permitAll()
 				.antMatchers("/signup").permitAll()
 				.antMatchers("/oauth/token").permitAll()
-				.antMatchers("/oauth/check_token").permitAll()
 				.anyRequest().authenticated()
 			.and().httpBasic().realmName("DEMO_REALM");
 	}

@@ -12,8 +12,4 @@ spring:
     url: jdbc:mysql://localhost:3306/db_demo
     username: demo
     password: welcome1
-    
-security:
-   oauth2:
-     resource:
-       token-info-uri: http://localhost:8088/security/oauth/check_token
+       
