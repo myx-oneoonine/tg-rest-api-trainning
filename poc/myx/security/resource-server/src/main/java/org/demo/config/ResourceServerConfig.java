@@ -11,12 +11,11 @@ import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHand
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		// -- define URL patterns to enable OAuth2 security
+
 		http.anonymous().disable()
 		.requestMatchers().antMatchers("/customers/**")
 		.and()
 		.authorizeRequests().antMatchers("/customers/**").access("hasRole('ADMIN') or hasRole('USER')")
-//		.authorizeRequests().antMatchers("/customers/**").access("hasRole('ADMIN')")
 		.and()
 		.exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
 	}
