@@ -35,7 +35,7 @@ public class CustomerController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getCustomer(@PathVariable Long id) {
 		Optional<Customer> customer = customerService.retrieveCustomer(id);
-		
+
 		if (!customer.isPresent()) {
 			return ResponseEntity.notFound().build();
 		} else {
@@ -54,6 +54,7 @@ public class CustomerController {
 		}
 	}
 
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@PostMapping()
 	public ResponseEntity<?> postCustomer(@Valid @RequestBody Customer body) {
 		Customer customer = customerService.createCustomer(body);
