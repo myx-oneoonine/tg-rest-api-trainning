@@ -21,8 +21,11 @@ INSERT INTO db_security.oauth_client_details
    (client_id, client_secret, scope, authorized_grant_types, 
    authorities, access_token_validity, refresh_token_validity)
 VALUES
-   ('clientID', 'clientSecret', 'read,write,trust', 'password,refresh_token', 
+   ('clientID', '{bcrypt}$2a$10$Pfd8P6VUQvh712Lizh5dNu/CqVTcE8AyFKNPyD17/QFXaq8C2.OYe', 'read,write,trust', 'password,refresh_token', 
    'ROLE_CLIENT,ROLE_TRUSTED_CLIENT', 180, 2592000);
+   -- client_secret = clientSecret
+   -- DELETE FROM `db_security`.`oauth_client_details` WHERE (`client_id` = 'clientID');
+   -- select * from `db_security`.`oauth_client_details`
    
    drop table if exists db_security.oauth_client_token;
 create table db_security.oauth_client_token (
