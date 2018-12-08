@@ -68,3 +68,34 @@ create table db_security.oauth_approvals (
 	expiresAt TIMESTAMP,
 	lastModifiedAt TIMESTAMP
 );
+
+
+
+-- user credentials
+-- create database db_credentials;
+-- create user 'credentials'@'%' identified by 'welcome1';
+-- grant all on db_credentials.* to 'credentials'@'%';
+
+drop table if exists db_security.users;
+create table db_security.users(
+	id bigint auto_increment key, 
+	username varchar(255), 
+	password varchar(255), 
+	enabled boolean, 
+	UNIQUE(username)
+    
+);
+drop table if exists db_security.authorities;
+create table db_security.authorities(
+	username varchar(255),
+	authority  varchar(255), 
+    UNIQUE(username,authority),
+	FOREIGN KEY (username) REFERENCES db_security.users(username)
+);
+
+insert into db_security.users(username,password,enabled) values('admin','adminpass',true);
+insert into db_security.users(username,password,enabled) values('user1','user1pass',true);
+
+insert into db_security.authorities(username,authority) values('admin','ADMIN');
+insert into db_security.authorities(username,authority) values('admin','USER');
+insert into db_security.authorities(username,authority) values('user1','USER');
