@@ -5,11 +5,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.demo</groupId>
-	<artifactId>demo-service</artifactId>
+	<artifactId>resource-server</artifactId>
 	<version>1.0.0</version>
 	<packaging>war</packaging>
 
-	<name>demo-service</name>
+	<name>resource-server</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
