@@ -8,4 +8,3 @@ spring:
     url: jdbc:mysql://localhost:3306/db_security
     username: security
     password: welcome1
- 

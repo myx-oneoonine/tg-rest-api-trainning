@@ -34,24 +34,11 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-//		clients.inMemory()
-//		.withClient("clientID").secret("{noop}clientSecret")
-//			.accessTokenValiditySeconds(120) 
-//			.refreshTokenValiditySeconds(86400) 
-//		.scopes("read", "write") 
-//			.authorizedGrantTypes("password", "refresh_token")
-//		.and().withClient("clientID2").secret("{noop}clientSecret")
-//			.accessTokenValiditySeconds(120) 
-//			.refreshTokenValiditySeconds(86400) 
-//		.scopes("read", "write") 
-//			.authorizedGrantTypes("password", "refresh_token");
 		clients.jdbc(dataSource);
 	}
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-//		endpoints.authenticationManager(authenticationManager);
-
 		endpoints.tokenStore(tokenStore).authenticationManager(authenticationManager);
 	}
 	
