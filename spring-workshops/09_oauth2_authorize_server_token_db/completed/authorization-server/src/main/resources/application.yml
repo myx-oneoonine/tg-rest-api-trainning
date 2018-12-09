@@ -2,3 +2,9 @@ server:
   port: 8088
   servlet:
     contextPath: /security
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_security
+    username: security
+    password: welcome1
