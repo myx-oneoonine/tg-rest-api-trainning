@@ -10,10 +10,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>org.demo</groupId>
-	<artifactId>authorization-server</artifactId>
+	<artifactId>authorization-server-ex</artifactId>
 	<version>1.0.0</version>
 	<packaging>war</packaging>
-	<name>authorization-server</name>
+	<name>authorization-server-ex</name>
 	<description>authorization server</description>
 
 	<properties>
