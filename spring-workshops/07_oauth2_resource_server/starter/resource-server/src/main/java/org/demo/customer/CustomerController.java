@@ -31,33 +31,22 @@ public class CustomerController {
 		return customerService.retrieveCustomer();
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<?> getCustomer(@PathVariable Long id) {
-		Optional<Customer> customer = customerService.retrieveCustomer(id);
-		
-		if (!customer.isPresent()) {
-			return ResponseEntity.notFound().build();
-		} else {
-			return ResponseEntity.ok(customer);
-		}
-	}
-
-	@GetMapping(params = "name")
-	public ResponseEntity<?> getCustomer(@RequestParam(value = "name") String name) {
-		List<Customer> customerList = customerService.retrieveCustomer(name);
-
-		if (customerList.isEmpty()) {
-			return ResponseEntity.notFound().build();
-		} else {
-			return ResponseEntity.ok(customerList);
-		}
-	}
-
 	@PostMapping()
 	public ResponseEntity<?> postCustomer(@Valid @RequestBody Customer body) {
 		Customer customer = customerService.createCustomer(body);
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(customer);
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getCustomer(@PathVariable Long id) {
+		Optional<Customer> customer = customerService.retrieveCustomer(id);
+
+		if (!customer.isPresent()) {
+			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.ok(customer);
+		}
 	}
 
 	@PutMapping("/{id}")
@@ -77,4 +66,16 @@ public class CustomerController {
 			return ResponseEntity.noContent().build();
 		}
 	}
+	
+	@GetMapping(params = "name")
+	public ResponseEntity<?> getCustomer(@RequestParam(value = "name") String name) {
+		List<Customer> customerList = customerService.retrieveCustomer(name);
+
+		if (customerList.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.ok(customerList);
+		}
+	}
+
 }
