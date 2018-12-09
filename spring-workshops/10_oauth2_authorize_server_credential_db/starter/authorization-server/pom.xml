@@ -10,17 +10,26 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>org.demo</groupId>
-	<artifactId>authorization-server-inmemory</artifactId>
+	<artifactId>authorization-server-credentail-db-starter</artifactId>
 	<version>1.0.0</version>
 	<packaging>war</packaging>
-	<name>authorization-server-inmemory</name>
-	<description>authorization server with inmemory storage</description>
+	<name>authorization-server-credentail-db-starter</name>
+	<description>authorization server with db credential storage</description>
 
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
 
 	<dependencies>
+		<!-- database -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
 		<!-- security -->
 		<dependency>
 			<groupId>org.springframework.security.oauth</groupId>

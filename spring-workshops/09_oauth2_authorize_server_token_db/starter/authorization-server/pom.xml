@@ -10,11 +10,11 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>org.demo</groupId>
-	<artifactId>authorization-server-inmemory</artifactId>
+	<artifactId>authorization-server-token-db-starter</artifactId>
 	<version>1.0.0</version>
 	<packaging>war</packaging>
-	<name>authorization-server-inmemory</name>
-	<description>authorization server with inmemory storage</description>
+	<name>authorization-server-token-db-starter</name>
+	<description>authorization server with db token storage</description>
 
 	<properties>
 		<java.version>1.8</java.version>

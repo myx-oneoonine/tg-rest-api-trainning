@@ -21,7 +21,8 @@ INSERT INTO db_security.oauth_client_details
    (client_id, client_secret, scope, authorized_grant_types, 
    authorities, access_token_validity, refresh_token_validity)
 VALUES
-   ('clientID', '{bcrypt}$2a$10$Pfd8P6VUQvh712Lizh5dNu/CqVTcE8AyFKNPyD17/QFXaq8C2.OYe', 'read,write,trust', 'password,refresh_token', 
+   ('clientID', '{bcrypt}$2a$10$Pfd8P6VUQvh712Lizh5dNu/CqVTcE8AyFKNPyD17/QFXaq8C2.OYe', 
+'read,write,trust', 'password,refresh_token', 
    'ROLE_CLIENT,ROLE_TRUSTED_CLIENT', 180, 2592000);
    -- client_secret = clientSecret
    -- DELETE FROM `db_security`.`oauth_client_details` WHERE (`client_id` = 'clientID');
@@ -68,35 +69,3 @@ create table db_security.oauth_approvals (
 	expiresAt TIMESTAMP,
 	lastModifiedAt TIMESTAMP
 );
-
-
-
--- user credentials
--- create database db_credentials;
--- create user 'credentials'@'%' identified by 'welcome1';
--- grant all on db_credentials.* to 'credentials'@'%';
-
-drop table if exists db_security.users;
-create table db_security.users(
-	id bigint auto_increment key, 
-	username varchar(255), 
-	password varchar(255), 
-	enabled boolean, 
-	UNIQUE(username)
-    
-);
-drop table if exists db_security.authorities;
-create table db_security.authorities(
-	username varchar(255),
-	authority  varchar(255), 
-    UNIQUE(username,authority),
-	FOREIGN KEY (username) REFERENCES db_security.users(username)
-);
-
-insert into db_security.users(username,password,enabled) values('admin','{noop}adminpass',true);
-insert into db_security.users(username,password,enabled) values('user1','{bcrypt}$2a$10$MHEZCwFLZ7T4HUyYu0V1ueo4o6w3N0CV.wc7yoCi1goH6RJ.Urkhi',true);
--- password is user1pass  
-
-insert into db_security.authorities(username,authority) values('admin','ROLE_ADMIN');
-insert into db_security.authorities(username,authority) values('admin','ROLE_USER');
-insert into db_security.authorities(username,authority) values('user1','ROLE_USER');

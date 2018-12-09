@@ -17,6 +17,10 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//		auth.inMemoryAuthentication()
+//			.withUser("admin").password("{noop}adminpass").roles("ADMIN", "USER").and()
+//			.withUser("user").password("{noop}userpass").roles("USER");
+
 		auth.jdbcAuthentication().dataSource(dataSource)
 				.authoritiesByUsernameQuery("select username,authority from authorities where username = ?")
 				.usersByUsernameQuery("select username,password,enabled from users where username = ?");
