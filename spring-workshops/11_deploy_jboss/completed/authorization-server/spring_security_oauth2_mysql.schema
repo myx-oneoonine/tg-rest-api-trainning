@@ -1,0 +1,99 @@
+create database db_security;
+create user 'security'@'%' identified by 'welcome1';
+grant all on db_security.* to 'security'@'%';
+
+
+create table db_security.oauth_client_details (
+  client_id VARCHAR(256) PRIMARY KEY,
+  resource_ids VARCHAR(256),
+  client_secret VARCHAR(256),
+  scope VARCHAR(256),
+  authorized_grant_types VARCHAR(256),
+  web_server_redirect_uri VARCHAR(256),
+  authorities VARCHAR(256),
+  access_token_validity INTEGER,
+  refresh_token_validity INTEGER,
+  additional_information VARCHAR(4096),
+  autoapprove VARCHAR(256)
+);
+
+INSERT INTO db_security.oauth_client_details 
+   (client_id, client_secret, scope, authorized_grant_types, 
+   authorities, access_token_validity, refresh_token_validity)
+VALUES
+   ('clientID', '{bcrypt}$2a$10$Pfd8P6VUQvh712Lizh5dNu/CqVTcE8AyFKNPyD17/QFXaq8C2.OYe', 
+'read,write,trust', 'password,refresh_token', 
+   'ROLE_CLIENT,ROLE_TRUSTED_CLIENT', 180, 2592000);
+   -- client_secret = clientSecret
+   -- DELETE FROM `db_security`.`oauth_client_details` WHERE (`client_id` = 'clientID');
+   -- select * from `db_security`.`oauth_client_details`
+   
+   drop table if exists db_security.oauth_client_token;
+create table db_security.oauth_client_token (
+  token_id VARCHAR(256),
+  token BLOB,
+  authentication_id VARCHAR(256) PRIMARY KEY,
+  user_name VARCHAR(256),
+  client_id VARCHAR(256)
+);
+
+drop table if exists db_security.oauth_access_token;
+create table db_security.oauth_access_token (
+  token_id VARCHAR(256),
+  token BLOB,
+  authentication_id VARCHAR(256) PRIMARY KEY,
+  user_name VARCHAR(256),
+  client_id VARCHAR(256),
+  authentication BLOB,
+  refresh_token VARCHAR(256)
+);
+
+drop table if exists db_security.oauth_refresh_token;
+create table db_security.oauth_refresh_token (
+  token_id VARCHAR(256),
+  token BLOB,
+  authentication BLOB
+);
+
+drop table if exists db_security.oauth_code;
+create table db_security.oauth_code (
+  code VARCHAR(256), authentication BLOB
+);
+
+drop table if exists db_security.oauth_approvals;
+create table db_security.oauth_approvals (
+	userId VARCHAR(256),
+	clientId VARCHAR(256),
+	scope VARCHAR(256),
+	status VARCHAR(10),
+	expiresAt TIMESTAMP,
+	lastModifiedAt TIMESTAMP
+);
+
+-- user credentials
+
+drop table if exists db_security.users;
+create table db_security.users(
+	id bigint auto_increment key, 
+	username varchar(255), 
+	password varchar(255), 
+	enabled boolean, 
+	UNIQUE(username)
+    
+);
+drop table if exists db_security.authorities;
+create table db_security.authorities(
+	username varchar(255),
+	authority  varchar(255), 
+    UNIQUE(username,authority),
+	FOREIGN KEY (username) REFERENCES db_security.users(username)
+);
+
+
+insert into db_security.users(username,password,enabled) values('admin','{noop}adminpass',true);
+insert into db_security.users(username,password,enabled) values('user1','{bcrypt}$2a$10$MHEZCwFLZ7T4HUyYu0V1ueo4o6w3N0CV.wc7yoCi1goH6RJ.Urkhi',true);
+-- password is user1pass  
+
+insert into db_security.authorities(username,authority) values('admin','ROLE_ADMIN');
+insert into db_security.authorities(username,authority) values('admin','ROLE_USER');
+insert into db_security.authorities(username,authority) values('user1','ROLE_USER');
