@@ -1,0 +1,12 @@
+server:
+  port: 8088
+  servlet:
+    contextPath: /security
+
+spring:
+  jmx:
+    default-domain: authorization-server
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_security
+    username: security
+    password: welcome1

@@ -1,0 +1,24 @@
+server:
+  port: 8080
+  servlet:
+    contextPath: /demo
+
+spring:
+  jmx:
+    default-domain: demo-service
+  jpa:
+    hibernate:
+      ddl-auto: create    
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_demo
+    username: demo
+    password: welcome1    
+  
+       
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://localhost:8080/security/oauth/check_token
+    client:
+      client-id: clientID
+      client-secret: clientSecret
